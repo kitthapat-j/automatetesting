@@ -1,32 +1,20 @@
-name: Unit Testing (Jest) CI
-
-# กำหนดให้ Workflow ทำงานเมื่อมีการ Push หรือ Pull Request ไปที่ branch main
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+# ... (ส่วนบน)
 jobs:
   run-unit-tests:
-    runs-on: ubuntu-latest # ใช้ Ubuntu เป็น Environment สำหรับรัน
-
+    runs-on: ubuntu-latest
     steps:
-      # 1. Checkout โค้ด
       - name: Checkout Repository
         uses: actions/checkout@v4
       
-      # 2. ติดตั้ง Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18' 
           
-      # 3. ติดตั้ง Dependencies (รวมถึง Jest)
+      # 3. ติดตั้ง Dependencies (แนะนำให้ใช้ npm ci ใน CI/CD)
       - name: Install Dependencies
-        run: npm install
-
-      # 4. รัน Unit Tests
+        run: npm ci # เปลี่ยนเป็น npm ci
+      
+      # 4. รัน Unit Tests (ใช้วิธีที่ถูกต้องที่สุด)
       - name: Run Jest Tests
-        # คำสั่งที่กำหนดไว้ใน package.json: "test": "jest"
-        run: npx jest
+        run: npx jest # ใช้ npx jest เพื่อให้ระบบรู้ว่าต้องรัน Jest binary
